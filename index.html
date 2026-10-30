@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Zanatsko Pivo Subotica | Паспорт пива</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            darkSurface: '#101115',
+            darkCard: '#171920',
+            darkBorder: '#262934'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0b0c10;
+      color: #e2e8f0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .heading-font {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    :root {
+      --accent-color: #dc2626;
+    }
+    .theme-accent-text { color: var(--accent-color); }
+    .theme-accent-bg { background-color: var(--accent-color); }
+    .theme-accent-border { border-color: var(--accent-color); }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-3 sm:p-5 selection:bg-amber-500 selection:text-black">
+
+  <!-- Mobile Screen Container (480px max) -->
+  <div class="w-full max-w-[480px] mx-auto flex flex-col gap-3.5 pb-10">
+
+    <!-- Header & Branding -->
+    <header class="flex items-center justify-between px-1 pt-1">
+      <div class="flex items-center gap-2.5">
+        <div id="breweryLogoWrap" class="w-9 h-9 rounded-xl p-[1.5px] transition-all duration-300" style="background: linear-gradient(135deg, var(--accent-color), #262934);">
+          <div class="w-full h-full bg-[#101115] rounded-[10px] flex items-center justify-center">
+            <svg class="w-5 h-5 transition-colors duration-300" style="color: var(--accent-color);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 2v4m0 0a4 4 0 014 4v10a2 2 0 01-2 2H10a2 2 0 01-2-2V10a4 4 0 014-4zm-4 8h8" />
+            </svg>
+          </div>
+        </div>
+        <div>
+          <span class="text-[10px] uppercase tracking-wider text-amber-500 font-bold block leading-tight">Zanatsko Pivo, Subotica</span>
+          <h1 class="heading-font text-sm font-extrabold text-white tracking-wide">DL</h1>
+        </div>
+      </div>
+    </header>
+
+    <!-- Beer Selector: Horizontal Scrollable Chips -->
+    <nav aria-label="Сорта пива" class="flex items-center gap-1.5 p-1 bg-darkCard border border-darkBorder rounded-2xl overflow-x-auto no-scrollbar">
+      <button onclick="switchBeer('apa')" id="tab-apa" class="tab-btn px-3 py-2 text-xs font-semibold rounded-xl whitespace-nowrap transition">
+        🌾 APA #51
+      </button>
+      <button onclick="switchBeer('ipa')" id="tab-ipa" class="tab-btn px-3 py-2 text-xs font-semibold rounded-xl whitespace-nowrap transition">
+        🌲 West Coast #50
+      </button>
+      <button onclick="switchBeer('gose')" id="tab-gose" class="tab-btn px-3 py-2 text-xs font-semibold rounded-xl whitespace-nowrap transition">
+        🍅 Tomato Gose #49
+      </button>
+      <button onclick="switchBeer('pumpkin')" id="tab-pumpkin" class="tab-btn px-3 py-2 text-xs font-semibold rounded-xl whitespace-nowrap transition">
+        🎃 Тыквенный эль #48
+      </button>
+      <button onclick="switchBeer('saison')" id="tab-saison" class="tab-btn px-3 py-2 text-xs font-semibold rounded-xl whitespace-nowrap transition">
+        🌿 Saison #47
+      </button>
+      <button onclick="switchBeer('aussie')" id="tab-aussie" class="tab-btn px-3 py-2 text-xs font-semibold rounded-xl whitespace-nowrap transition">
+        🦘 Aussie IPA #45
+      </button>
+      <button onclick="switchBeer('wheat')" id="tab-wheat" class="tab-btn px-3 py-2 text-xs font-semibold rounded-xl whitespace-nowrap transition">
+        🍋 American Wheat #44
+      </button>
+    </nav>
+
+    <!-- Hero Card -->
+    <main class="relative rounded-3xl bg-darkCard border border-darkBorder overflow-hidden p-5 shadow-2xl transition-colors duration-500">
+      <div id="heroGlow" class="absolute -top-24 -right-24 w-56 h-56 rounded-full blur-3xl pointer-events-none transition-all duration-700 opacity-25"></div>
+
+      <!-- Batch & Style Badges -->
+      <div class="flex items-center justify-between gap-2 mb-3">
+        <span id="beerStyleBadge" class="text-[11px] font-bold px-2.5 py-1 rounded-full border tracking-wide uppercase transition-colors">
+          American Pale Ale
+        </span>
+        <span id="batchCode" class="text-[11px] font-mono font-bold text-amber-400 px-2 py-0.5 rounded-md bg-[#101115] border border-darkBorder">
+          Batch #51
+        </span>
+      </div>
+
+      <!-- Beer Title & Tagline -->
+      <h2 id="beerTitle" class="heading-font text-2xl font-extrabold text-white leading-tight mb-1.5">
+        American Pale Ale
+      </h2>
+      <p id="beerTagline" class="text-xs text-zinc-400 mb-5 leading-relaxed">
+        Сбалансированный и питкий бледный эль с мягкой карамельной нотой и хвойно-цитрусовым шлейфом.
+      </p>
+
+      <!-- Metrics Grid -->
+      <div class="grid grid-cols-4 gap-2 text-center">
+        <div class="bg-[#101115] rounded-2xl p-2.5 border border-darkBorder/60">
+          <span class="text-[10px] uppercase font-semibold text-zinc-500 block">ABV</span>
+          <span id="metricABV" class="text-base font-bold text-white tracking-tight">5.2%</span>
+        </div>
+        <div class="bg-[#101115] rounded-2xl p-2.5 border border-darkBorder/60">
+          <span class="text-[10px] uppercase font-semibold text-zinc-500 block">IBU</span>
+          <span id="metricIBU" class="text-base font-bold tracking-tight theme-accent-text">35</span>
+        </div>
+        <div class="bg-[#101115] rounded-2xl p-2.5 border border-darkBorder/60">
+          <span class="text-[10px] uppercase font-semibold text-zinc-500 block">OG</span>
+          <span id="metricOG" class="text-base font-bold text-white tracking-tight">12.2°P</span>
+        </div>
+        <div class="bg-[#101115] rounded-2xl p-2.5 border border-darkBorder/60">
+          <span class="text-[10px] uppercase font-semibold text-zinc-500 block">FG</span>
+          <span id="metricFG" class="text-base font-bold text-zinc-300 tracking-tight">2.8°P</span>
+        </div>
+      </div>
+    </main>
+
+    <!-- Flavor Profile / Sensory Bars -->
+    <section class="rounded-3xl bg-darkCard border border-darkBorder p-5">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2">
+          <svg class="w-4 h-4 theme-accent-text" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+          <h3 class="text-xs uppercase font-bold tracking-wider text-zinc-200">Профиль вкуса</h3>
+        </div>
+        <span class="text-[11px] text-zinc-400">Сенсорная карта</span>
+      </div>
+
+      <div class="space-y-3" id="flavorBarsContainer">
+        <!-- Injected via JS -->
+      </div>
+
+      <div class="mt-4 pt-4 border-t border-darkBorder/60">
+        <span class="text-[10px] uppercase font-semibold text-zinc-400 block mb-1">Дегустационные заметки</span>
+        <p id="tastingNotesText" class="text-xs text-zinc-300 leading-relaxed"></p>
+      </div>
+    </section>
+
+    <!-- Clean Ingredients Specification -->
+    <section class="rounded-3xl bg-darkCard border border-darkBorder overflow-hidden">
+      <button onclick="toggleSpecs()" class="w-full p-4 px-5 flex items-center justify-between text-left hover:bg-zinc-800/30 transition">
+        <div class="flex items-center gap-2.5">
+          <svg class="w-4 h-4 theme-accent-text" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+          </svg>
+          <span class="text-xs uppercase font-bold tracking-wider text-zinc-200">Ингредиенты и состав</span>
+        </div>
+        <svg id="specsChevron" class="w-4 h-4 text-zinc-400 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+
+      <div id="specsContent" class="px-5 pb-5 pt-1 space-y-3 text-xs border-t border-darkBorder/40">
+        <div>
+          <span class="text-zinc-400 font-semibold text-[11px] block mb-1">🌾 Солодовая основа:</span>
+          <p id="specMalts" class="text-zinc-200 bg-[#101115] p-2.5 rounded-xl border border-darkBorder/50 font-medium text-[11px]"></p>
+        </div>
+
+        <div>
+          <span class="text-zinc-400 font-semibold text-[11px] block mb-1">🌿 Хмель и добавки:</span>
+          <p id="specHops" class="text-zinc-200 bg-[#101115] p-2.5 rounded-xl border border-darkBorder/50 font-medium text-[11px]"></p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <span class="text-zinc-400 font-semibold text-[11px] block mb-1">🧫 Дрожжи:</span>
+            <p id="specYeast" class="text-zinc-200 bg-[#101115] p-2 rounded-xl border border-darkBorder/50 font-medium text-[11px]"></p>
+          </div>
+          <div>
+            <span class="text-zinc-400 font-semibold text-[11px] block mb-1">💧 Вода и созревание:</span>
+            <p id="specAgeing" class="text-zinc-200 bg-[#101115] p-2 rounded-xl border border-darkBorder/50 font-medium text-[11px]"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Serving Info -->
+    <section class="rounded-3xl bg-darkCard border border-darkBorder p-5">
+      <div class="flex items-center gap-2 mb-3">
+        <svg class="w-4 h-4 theme-accent-text" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18z"/>
+        </svg>
+        <h3 class="text-xs uppercase font-bold tracking-wider text-zinc-200">Подача и гастропары</h3>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 mb-3">
+        <div class="p-3 bg-[#101115] rounded-2xl border border-darkBorder/60 flex items-center gap-2.5">
+          <span class="text-xl">🌡️</span>
+          <div>
+            <span class="text-[10px] uppercase font-semibold text-zinc-500 block">Температура</span>
+            <span id="serveTemp" class="text-xs font-bold text-white"></span>
+          </div>
+        </div>
+        <div class="p-3 bg-[#101115] rounded-2xl border border-darkBorder/60 flex items-center gap-2.5">
+          <span class="text-xl">🍸</span>
+          <div>
+            <span class="text-[10px] uppercase font-semibold text-zinc-500 block">Бокал</span>
+            <span id="serveGlass" class="text-xs font-bold text-white"></span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="text-[10px] uppercase font-semibold text-zinc-400 block mb-1.5">Рекомендуем к:</span>
+        <div id="pairingsList" class="flex flex-wrap gap-1.5"></div>
+      </div>
+    </section>
+
+    <!-- Single-Channel Feedback Form: Telegram ONLY -->
+    <section class="rounded-3xl bg-darkCard border border-darkBorder p-5 shadow-lg">
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-2">
+          <svg class="w-4 h-4 text-[#229ED9]" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+          </svg>
+          <h3 class="text-xs uppercase font-bold tracking-wider text-zinc-200">Отзыв пивовару в Telegram</h3>
+        </div>
+        <span id="ratingStatus" class="text-[11px] theme-accent-text font-medium">Поставьте оценку</span>
+      </div>
+
+      <!-- Star Rating Bar -->
+      <div class="flex justify-center items-center gap-3 py-2 bg-[#101115] rounded-2xl border border-darkBorder/60 mb-3" id="starsContainer">
+        <button onclick="setRating(1)" class="star-btn text-2xl text-zinc-600 hover:text-amber-400 transition transform hover:scale-110">★</button>
+        <button onclick="setRating(2)" class="star-btn text-2xl text-zinc-600 hover:text-amber-400 transition transform hover:scale-110">★</button>
+        <button onclick="setRating(3)" class="star-btn text-2xl text-zinc-600 hover:text-amber-400 transition transform hover:scale-110">★</button>
+        <button onclick="setRating(4)" class="star-btn text-2xl text-zinc-600 hover:text-amber-400 transition transform hover:scale-110">★</button>
+        <button onclick="setRating(5)" class="star-btn text-2xl text-zinc-600 hover:text-amber-400 transition transform hover:scale-110">★</button>
+      </div>
+
+      <!-- Quick Impressions -->
+      <span class="text-[10px] uppercase font-semibold text-zinc-400 block mb-2">Ощущения от глотка:</span>
+      <div class="flex flex-wrap gap-1.5 mb-3" id="feedbackTags">
+        <button onclick="toggleTag(this)" class="tag-pill px-2.5 py-1 rounded-xl bg-[#101115] border border-darkBorder text-zinc-400 text-xs transition">Хрустящее</button>
+        <button onclick="toggleTag(this)" class="tag-pill px-2.5 py-1 rounded-xl bg-[#101115] border border-darkBorder text-zinc-400 text-xs transition">Яркий хмель</button>
+        <button onclick="toggleTag(this)" class="tag-pill px-2.5 py-1 rounded-xl bg-[#101115] border border-darkBorder text-zinc-400 text-xs transition">Плотное тело</button>
+        <button onclick="toggleTag(this)" class="tag-pill px-2.5 py-1 rounded-xl bg-[#101115] border border-darkBorder text-zinc-400 text-xs transition">Баланс горечи</button>
+        <button onclick="toggleTag(this)" class="tag-pill px-2.5 py-1 rounded-xl bg-[#101115] border border-darkBorder text-zinc-400 text-xs transition">Освежает</button>
+        <button onclick="toggleTag(this)" class="tag-pill px-2.5 py-1 rounded-xl bg-[#101115] border border-darkBorder text-zinc-400 text-xs transition">Пряное</button>
+      </div>
+
+      <!-- Comment field -->
+      <div class="mb-3">
+        <textarea id="commentInput" rows="2" placeholder="Напишите пару слов о вкусе, аромате или балансе..." class="w-full bg-[#101115] border border-darkBorder rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-amber-500 placeholder-zinc-600 resize-none"></textarea>
+      </div>
+
+      <!-- Single Direct Telegram Action Button -->
+      <button onclick="sendToTelegram()" class="w-full flex items-center justify-center gap-2 py-3 px-4 bg-[#229ED9] hover:bg-[#1d8bc0] text-white font-bold rounded-2xl text-xs shadow-lg transition active:scale-[0.98]">
+        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+        </svg>
+        Отправить в Telegram пивовару
+      </button>
+
+      <div id="feedbackToast" class="hidden mt-3 p-3 bg-emerald-950/80 border border-emerald-500/40 rounded-xl text-center text-xs text-emerald-300"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center pt-2 pb-2">
+      <p class="text-[11px] text-zinc-400 font-medium">Zanatsko Pivo, Subotica</p>
+      <p class="text-[10px] text-zinc-500 mt-0.5">Сварено с душой. Употребляйте охлажденным 🍻</p>
+    </footer>
+
+  </div>
+
+  <script>
+    const beers = {
+      apa: {
+        id: 'apa',
+        batchNumber: '51',
+        batchTag: 'Batch #51',
+        name: 'Castigliane APA',
+        tagline: 'Сбалансированный и питкий бледный эль с мягкой карамельной нотой и хвойно-цитрусовым шлейфом.',
+        style: 'American Pale Ale',
+        abv: '5.2%',
+        ibu: '35',
+        og: '12.2°P',
+        fg: '2.8°P',
+        malts: 'Pilsner, Carapils, Abbey Malt',
+        hops: 'Nugget, Cascade, Amarillo',
+        yeast: 'SafAle S-04',
+        ageing: '-',
+        serveTemp: '6 – 8°C',
+        serveGlass: 'American Shaker Pint',
+        pairings: ['Сырный сэндвич', 'Кесадилья', 'Рыбные тако', 'Картофель фри'],
+        tastingNotes: 'Легкое, хрустящее тело с легкими медовыми оттенками солода Abbey и выразительным ароматом цитрусов и смолы.',
+        flavors: [
+          { name: 'Хмелевой аромат', val: 75, color: 'bg-red-500' },
+          { name: 'Питкость', val: 95, color: 'bg-red-400' },
+          { name: 'Горечь', val: 50, color: 'bg-rose-600' },
+          { name: 'Солодовый баланс', val: 55, color: 'bg-amber-600' },
+          { name: 'Сладость', val: 20, color: 'bg-red-300' }
+        ],
+        themeColor: '#dc2626', // Красный
+        tabTextColor: '#ffffff',
+        badgeBg: 'rgba(220, 38, 38, 0.15)',
+        badgeBorder: 'rgba(220, 38, 38, 0.4)'
+      },
+      ipa: {
+        id: 'ipa',
+        batchNumber: '50',
+        batchTag: 'Batch #50',
+        name: 'West Coast IPA (совместно с Технохатой)',
+        tagline: 'Классический сухой West Coast: чистая база без карамельной тяжести, уверенная горечь и спелые фрукты.',
+        style: 'American IPA',
+        abv: '6.2%',
+        ibu: '60',
+        og: '14.5°P',
+        fg: '3.3°P',
+        malts: 'Pale Ale, Пшеничный солод',
+        hops: 'Nugget, Cascade, Mosaic, Amarillo',
+        yeast: 'SafAle US-05',
+        ageing: '-',
+        serveTemp: '7 – 9°C',
+        serveGlass: 'Nonic / IPA Glass',
+        pairings: ['Сочные бургеры', 'Острые крылья', 'Пицца пепперони', 'Чеддер'],
+        tastingNotes: 'Сухой финиш, мощная благородная горечь и яркая палитра: грейпфрут, апельсиновая цедра и тропические фрукты.',
+        flavors: [
+          { name: 'Горечь', val: 88, color: 'bg-red-700' },
+          { name: 'Хмелевой аромат', val: 82, color: 'bg-rose-500' },
+          { name: 'Хрусткость / Сухость', val: 90, color: 'bg-orange-500' },
+          { name: 'Солодовое тело', val: 38, color: 'bg-red-900' },
+          { name: 'Сладость', val: 15, color: 'bg-zinc-500' }
+        ],
+        themeColor: '#b91c1c', // Другой оттенок красного (глубокий рубиновый)
+        tabTextColor: '#ffffff',
+        badgeBg: 'rgba(185, 28, 28, 0.15)',
+        badgeBorder: 'rgba(185, 28, 28, 0.4)'
+      },
+      gose: {
+        id: 'gose',
+        batchNumber: '49',
+        batchTag: 'Batch #49',
+        name: 'Gardenback Tomato',
+        tagline: 'Густой томатный гозе со специями, копченой паприкой, соусом шрирача, морской солью и чили.',
+        style: 'Tomato Chili Gose',
+        abv: '5.0%',
+        ibu: '8',
+        og: '11.5°P',
+        fg: '3.6°P',
+        malts: 'Pilsner, Wheat Malt, Vienna',
+        hops: 'Кориандр, Морская соль, хмель Подвязный, томатная пассата, шрирача, паприка, чили',
+        yeast: 'Philly Sour',
+        ageing: 'Холодная выдержка при низкой температуре',
+        serveTemp: '4 – 6°C',
+        serveGlass: 'Пинта / Tumbler',
+        pairings: ['Мексиканские тако', 'Барбекю ребра', 'Сырные начос', 'Колбаски на гриле'],
+        tastingNotes: 'Яркая томатная основа «Кровавой Мэри», морская соль, легкий чесночный штрих шрирачи и согревающий перец чили.',
+        flavors: [
+          { name: 'Томатный объем', val: 96, color: 'bg-green-500' },
+          { name: 'Кислинка', val: 75, color: 'bg-emerald-400' },
+          { name: 'Соленость', val: 70, color: 'bg-lime-400' },
+          { name: 'Острота чили', val: 68, color: 'bg-red-500' },
+          { name: 'Хмелевая горечь', val: 10, color: 'bg-zinc-500' }
+        ],
+        themeColor: '#22c55e', // Ярко-зеленый
+        tabTextColor: '#000000',
+        badgeBg: 'rgba(34, 197, 94, 0.15)',
+        badgeBorder: 'rgba(34, 197, 94, 0.4)'
+      },
+      pumpkin: {
+        id: 'pumpkin',
+        batchNumber: '48',
+        batchTag: 'Batch #48',
+        name: 'Pumpkinhead',
+        tagline: 'Пряный осенний эль с запеченной тыквой, корицей, мускатным орехом и карамельным солодом.',
+        style: 'Pumpkin Pie Ale',
+        abv: '6.0%',
+        ibu: '22',
+        og: '15.0°P',
+        fg: '3.6°P',
+        malts: 'Pale Ale, Munich, Biscuit, Rosewood, Special B',
+        hops: 'East Kent Goldings, Специи для тыквенного пирога, запеченная тыква',
+        yeast: 'Leyka English Ale',
+        ageing: 'Длительное созревание для балансировки пряностей',
+        serveTemp: '10 – 12°C',
+        serveGlass: 'Snifter / Goblet',
+        pairings: ['Печеная утка', 'Выдержанные сыры', 'Тыквенный пирог', 'Ореховые десерты'],
+        tastingNotes: 'Глубокий медный тон, аромат домашнего тыквенного пирога, корицы и карамели с обволакивающим кремовым телом.',
+        flavors: [
+          { name: 'Пряность специй', val: 88, color: 'bg-amber-600' },
+          { name: 'Карамельность', val: 82, color: 'bg-yellow-700' },
+          { name: 'Полнотелость', val: 75, color: 'bg-amber-500' },
+          { name: 'Сладость', val: 50, color: 'bg-orange-500' },
+          { name: 'Горечь', val: 25, color: 'bg-zinc-500' }
+        ],
+        themeColor: '#ea580c', // Тыквенно-оранжевый (сохранен)
+        tabTextColor: '#ffffff',
+        badgeBg: 'rgba(234, 88, 12, 0.15)',
+        badgeBorder: 'rgba(234, 88, 12, 0.4)'
+      },
+      saison: {
+        id: 'saison',
+        batchNumber: '47',
+        batchTag: 'Batch #47',
+        name: 'The Straight Saison',
+        tagline: 'Традиционный бельгийский фермерский эль: сухой, искристый, с тонкими перечными и цитрусовыми эфирами.',
+        style: 'Belgian Saison',
+        abv: '6.5%',
+        ibu: '28',
+        og: '13.5°P',
+        fg: '1.0°P (1.004 SG)',
+        malts: 'Pilsner, Vienna, Wheat',
+        hops: 'Saaz, Mandarina Bavaria',
+        yeast: 'ASP Lab DY3022 Saison',
+        ageing: 'Полное сбраживание досуха в тепле',
+        serveTemp: '8 – 10°C',
+        serveGlass: 'Chalice / Тюльпан',
+        pairings: ['Мидии в белом вине', 'Козий сыр', 'Жареная птица', 'Спаржа'],
+        tastingNotes: 'Игристое шампанское тело, абсолютная сухость, пряные перечные фенолы и освежающая фруктовая эфирность.',
+        flavors: [
+          { name: 'Сухость / Игристость', val: 98, color: 'bg-yellow-600' },
+          { name: 'Пряные фенолы', val: 82, color: 'bg-amber-600' },
+          { name: 'Фруктовые эфиры', val: 75, color: 'bg-yellow-500' },
+          { name: 'Горечь', val: 38, color: 'bg-zinc-500' },
+          { name: 'Сладость', val: 5, color: 'bg-amber-200' }
+        ],
+        themeColor: '#d4a373', // Пустынно-желтый / песочный
+        tabTextColor: '#000000',
+        badgeBg: 'rgba(212, 163, 115, 0.15)',
+        badgeBorder: 'rgba(212, 163, 115, 0.4)'
+      },
+      aussie: {
+        id: 'aussie',
+        batchNumber: '45',
+        batchTag: 'Batch #45',
+        name: 'The Blue Key',
+        tagline: 'Сочный IPA на австралийских хмелях с доминантой спелой маракуйи, манго, персика и легкой хвои.',
+        style: 'Australian IPA',
+        abv: '6.5%',
+        ibu: '50',
+        og: '15.0°P',
+        fg: '3.1°P',
+        malts: 'Pils, Vienna, Wheat',
+        hops: 'Galaxy, Ekuanot, BRU-I',
+        yeast: 'Angel American Ale Yeast A01',
+        ageing: 'Созревание 21 день',
+        serveTemp: '7 – 9°C',
+        serveGlass: 'IPA Glass / Teku',
+        pairings: ['Блюда тайской кухни', 'Карри', 'Стейк на гриле', 'Острые сыры'],
+        tastingNotes: 'Взрыв аромата тропиков: сочная маракуйя, ананас и смолисто-хвойный чистый каркас.',
+        flavors: [
+          { name: 'Тропический аромат', val: 96, color: 'bg-sky-500' },
+          { name: 'Горечь', val: 70, color: 'bg-blue-600' },
+          { name: 'Сочность', val: 85, color: 'bg-cyan-400' },
+          { name: 'Солодовая база', val: 45, color: 'bg-blue-300' },
+          { name: 'Сладость', val: 25, color: 'bg-indigo-400' }
+        ],
+        themeColor: '#0284c7', // Ярко-синий
+        tabTextColor: '#ffffff',
+        badgeBg: 'rgba(2, 132, 199, 0.15)',
+        badgeBorder: 'rgba(2, 132, 199, 0.4)'
+      },
+      wheat: {
+        id: 'wheat',
+        batchNumber: '44',
+        batchTag: 'Batch #44',
+        name: 'Wild At Heart',
+        tagline: 'Мягкое американское пшеничное пиво с чистым элевым характером, ярким хмелевым ароматом и деликатным цитрусовым финишем.',
+        style: 'American Wheat Beer',
+        abv: '4.8%',
+        ibu: '20',
+        og: '11.8°P',
+        fg: '2.8°P',
+        malts: 'Wheat Malt, Pilsner',
+        hops: 'Citra, BRU-I, Cascade',
+        yeast: 'Leyka American Ale',
+        ageing: 'Созревание 14 дней',
+        serveTemp: '5 – 7°C',
+        serveGlass: 'Weizen / Willi Becher',
+        pairings: ['Летние салаты', 'Морепродукты', 'Мягкий козий сыр', 'Суши'],
+        tastingNotes: 'Шелковистая текстура пшеницы, чистый зерновой профиль и тонкая свежесть сладких цитрусов.',
+        flavors: [
+          { name: 'Освежающий эффект', val: 95, color: 'bg-slate-200' },
+          { name: 'Кремовое тело', val: 70, color: 'bg-zinc-300' },
+          { name: 'Цитрусовый тон', val: 65, color: 'bg-amber-300' },
+          { name: 'Горечь', val: 22, color: 'bg-zinc-500' },
+          { name: 'Сладость', val: 30, color: 'bg-slate-400' }
+        ],
+        themeColor: '#f8fafc', // Белый
+        tabTextColor: '#000000',
+        badgeBg: 'rgba(248, 250, 252, 0.12)',
+        badgeBorder: 'rgba(248, 250, 252, 0.35)'
+      }
+    };
+
+    let currentBeerId = 'apa';
+    let currentRating = 0;
+
+    function switchBeer(beerId) {
+      currentBeerId = beerId;
+      const b = beers[beerId];
+      if (!b) return;
+
+      document.documentElement.style.setProperty('--accent-color', b.themeColor);
+
+      // Tab highlighting with dynamic text color contrast
+      Object.keys(beers).forEach(id => {
+        const tab = document.getElementById(`tab-${id}`);
+        if (!tab) return;
+        if (id === beerId) {
+          tab.style.backgroundColor = b.themeColor;
+          tab.style.color = b.tabTextColor || '#000000';
+          tab.style.boxShadow = `0 4px 14px ${b.themeColor}40`;
+          tab.classList.add('font-bold');
+        } else {
+          tab.style.backgroundColor = 'transparent';
+          tab.style.color = '#a1a1aa';
+          tab.style.boxShadow = 'none';
+          tab.classList.remove('font-bold');
+        }
+      });
+
+      // Update Hero Content
+      document.getElementById('beerTitle').textContent = b.name;
+      document.getElementById('beerTagline').textContent = b.tagline;
+      
+      const badge = document.getElementById('beerStyleBadge');
+      badge.textContent = b.style;
+      badge.style.backgroundColor = b.badgeBg;
+      badge.style.borderColor = b.badgeBorder;
+      badge.style.color = b.themeColor;
+
+      document.getElementById('batchCode').textContent = b.batchTag;
+      document.getElementById('metricABV').textContent = b.abv;
+      document.getElementById('metricIBU').textContent = b.ibu;
+      document.getElementById('metricOG').textContent = b.og;
+      document.getElementById('metricFG').textContent = b.fg;
+      document.getElementById('specMalts').textContent = b.malts;
+      document.getElementById('specHops').textContent = b.hops;
+      document.getElementById('specYeast').textContent = b.yeast;
+      document.getElementById('specAgeing').textContent = b.ageing;
+      document.getElementById('serveTemp').textContent = b.serveTemp;
+      document.getElementById('serveGlass').textContent = b.serveGlass;
+      document.getElementById('tastingNotesText').textContent = b.tastingNotes;
+
+      document.getElementById('heroGlow').style.backgroundColor = b.themeColor;
+
+      // Render Flavor Bars
+      const barsContainer = document.getElementById('flavorBarsContainer');
+      barsContainer.innerHTML = '';
+      b.flavors.forEach(f => {
+        const row = document.createElement('div');
+        row.innerHTML = `
+          <div class="flex justify-between text-[11px] mb-1">
+            <span class="text-zinc-300 font-medium">${f.name}</span>
+            <span class="text-zinc-400 font-mono">${f.val}%</span>
+          </div>
+          <div class="w-full h-2 bg-[#101115] rounded-full overflow-hidden p-[1px] border border-darkBorder/40">
+            <div class="h-full rounded-full ${f.color} transition-all duration-700 ease-out" style="width: ${f.val}%"></div>
+          </div>
+        `;
+        barsContainer.appendChild(row);
+      });
+
+      // Render Pairings
+      const pairingsList = document.getElementById('pairingsList');
+      pairingsList.innerHTML = '';
+      b.pairings.forEach(p => {
+        const chip = document.createElement('span');
+        chip.className = 'text-[11px] bg-[#101115] text-zinc-300 border border-darkBorder/80 px-2.5 py-1 rounded-lg';
+        chip.textContent = '🍽️ ' + p;
+        pairingsList.appendChild(chip);
+      });
+
+      resetRatingUI();
+    }
+
+    let specsOpen = true;
+    function toggleSpecs() {
+      const content = document.getElementById('specsContent');
+      const chevron = document.getElementById('specsChevron');
+      specsOpen = !specsOpen;
+      if (specsOpen) {
+        content.classList.remove('hidden');
+        chevron.classList.remove('-rotate-90');
+      } else {
+        content.classList.add('hidden');
+        chevron.classList.add('-rotate-90');
+      }
+    }
+
+    function setRating(rating) {
+      currentRating = rating;
+      const stars = document.querySelectorAll('.star-btn');
+      stars.forEach((star, index) => {
+        if (index < rating) {
+          star.classList.remove('text-zinc-600');
+          star.classList.add('text-amber-400');
+        } else {
+          star.classList.remove('text-amber-400');
+          star.classList.add('text-zinc-600');
+        }
+      });
+      const status = document.getElementById('ratingStatus');
+      const labels = ['', 'На любителя 🍺', 'Неплохо 👍', 'Хороший эль! 👌', 'Отличный баланс! 🌟', 'Шедевр! 👑'];
+      status.textContent = labels[rating];
+    }
+
+    function resetRatingUI() {
+      currentRating = 0;
+      const stars = document.querySelectorAll('.star-btn');
+      stars.forEach(s => {
+        s.classList.remove('text-amber-400');
+        s.classList.add('text-zinc-600');
+      });
+      document.getElementById('ratingStatus').textContent = 'Поставьте оценку';
+      document.getElementById('feedbackToast').classList.add('hidden');
+    }
+
+    function toggleTag(btn) {
+      btn.classList.toggle('bg-amber-500');
+      btn.classList.toggle('text-black');
+      btn.classList.toggle('font-bold');
+      btn.classList.toggle('border-amber-400');
+    }
+
+    function sendToTelegram() {
+      const b = beers[currentBeerId];
+      const selectedTags = Array.from(document.querySelectorAll('#feedbackTags .bg-amber-500')).map(el => el.textContent.trim());
+      const comment = document.getElementById('commentInput').value.trim();
+      const starsStr = currentRating > 0 ? '★'.repeat(currentRating) + ` (${currentRating}/5)` : 'Без оценки';
+
+      let text = `🍺 Отзыв: ${b.name} (${b.batchTag})\n`;
+      text += `⭐ Оценка: ${starsStr}\n`;
+      if (selectedTags.length > 0) {
+        text += `🏷️ Ощущения: ${selectedTags.join(', ')}\n`;
+      }
+      if (comment) {
+        text += `💬 Заметка: ${comment}\n`;
+      }
+      text += `📍 Zanatsko Pivo, Subotica`;
+
+      const url = `https://t.me/mkhlopotov?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank');
+
+      const toast = document.getElementById('feedbackToast');
+      toast.textContent = 'Переход в Telegram 🚀';
+      toast.classList.remove('hidden');
+    }
+
+function detectInitialBeer() {
+      let beerQuery = '';
+
+      // 1. Проверяем document.referrer (в iframe Google передает полный URL родителя со всеми ?beer= или #...)
+      try {
+        if (document.referrer) {
+          const refUrl = new URL(document.referrer);
+          beerQuery = refUrl.searchParams.get('beer') || refUrl.hash.replace('#', '');
+        }
+      } catch (e) {}
+
+      // 2. Если не нашли, проверяем текущий search и hash фрейма
+      if (!beerQuery) {
+        try {
+          const currentParams = new URLSearchParams(window.location.search);
+          beerQuery = currentParams.get('beer') || window.location.hash.replace('#', '');
+        } catch (e) {}
+      }
+
+      // 3. Пробуем прочитать родительское окно (если домены совпали)
+      if (!beerQuery) {
+        try {
+          if (window.parent && window.parent.location) {
+            const parentParams = new URLSearchParams(window.parent.location.search);
+            beerQuery = parentParams.get('beer') || window.parent.location.hash.replace('#', '');
+          }
+        } catch (e) {}
+      }
+
+      beerQuery = (beerQuery || '').toLowerCase().trim();
+
+      const batchMap = {
+        '51': 'apa',
+        '50': 'ipa',
+        '49': 'gose',
+        '48': 'pumpkin',
+        '47': 'saison',
+        '45': 'aussie',
+        '44': 'wheat'
+      };
+
+      if (batchMap[beerQuery]) {
+        switchBeer(batchMap[beerQuery]);
+      } else if (beers[beerQuery]) {
+        switchBeer(beerQuery);
+      } else {
+        switchBeer('apa');
+      }
+    }
+
+    // Слушаем сообщения, если Google Sites передает данные
+    window.addEventListener('message', function(event) {
+      if (event.data && (beers[event.data] || event.data in {'51':1,'50':1,'49':1,'48':1,'47':1,'45':1,'44':1})) {
+        const batchMap = {'51':'apa','50':'ipa','49':'gose','48':'pumpkin','47':'saison','45':'aussie','44':'wheat'};
+        switchBeer(batchMap[event.data] || event.data);
+      }
+    });
+
+    window.onload = detectInitialBeer;
+    
+  </script>
+</body>
+</html>
